@@ -1,14 +1,14 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const fmtMpp = v => v == null ? 'missing' : String(Number(Number(v).toPrecision(4)));
-const token = document.querySelector('meta[name="zsendo-token"]').content;
+const token = document.querySelector('meta[name="pathadinai-token"]').content;
 let accountIds=[];const activities=new Map();
 let config, slide, job, viewer, pollTimer, currentGeo, geoKey, noticeTimer;
 let previewPlanHash=null,previewBatch=0,previewSource='proposed',previewOverlays=[];
 let tissueMask=null, maskCanvas=null, maskDirty=false, maskMode="pan", maskUndo=null, maskLoading=false;
 function notice(text) { $('message').textContent=text; $('message').hidden=false; clearTimeout(noticeTimer); noticeTimer=setTimeout(()=>$('message').hidden=true,9000); }
 async function api(path, data) {
-  const r=await fetch(path,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','x-zsendo-token':token},body:JSON.stringify(data)});
+  const r=await fetch(path,data===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json','x-pathadinai-token':token},body:JSON.stringify(data)});
   if(!r.ok){let error;try{error=await r.json();}catch{error={detail:r.statusText};}throw Error(typeof error.detail==='string'?error.detail:JSON.stringify(error.detail));}
   return r.json();
 }
