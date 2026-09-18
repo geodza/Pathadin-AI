@@ -3,7 +3,7 @@ from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
 from fastapi.testclient import TestClient
-from zsendo.queue import scan_folder
+from pathadinai.queue import scan_folder
 
 class FolderTests(unittest.TestCase):
  def test_mrxs_companions_not_scanned(self):
@@ -13,12 +13,12 @@ class FolderTests(unittest.TestCase):
 
 class QueueApiTests(unittest.TestCase):
  def test_review_gate_and_cap_resume_and_csv(self):
-  from zsendo.app import app,TOKEN,engine
-  from zsendo import adapters
+  from pathadinai.app import app,TOKEN,engine
+  from pathadinai import adapters
   original=adapters.call
   async def mock(provider,*args,**kwargs):return await original('demo',*args,**kwargs)
   with tempfile.TemporaryDirectory() as tmp,TestClient(app) as c,patch.dict(os.environ,{'OPENAI_API_KEY':'test-only-placeholder'}),patch.object(adapters,'call',mock):
-   headers={'x-zsendo-token':TOKEN}
+   headers={'x-pathadinai-token':TOKEN}
    paths=[]
    for i in range(2):
     p=Path(tmp)/f'slide{i}.png';Image.new('RGB',(64,64),(190,110,150)).save(p);paths.append(str(p))
@@ -46,12 +46,12 @@ class QueueApiTests(unittest.TestCase):
    rows=list(csv.reader(io.StringIO(c.get(f'/api/queues/{qid}/results.csv').text.lstrip('\ufeff'))));self.assertEqual(len(rows),3)
 
  def test_bad_slide_does_not_stop_automatic_queue(self):
-  from zsendo.app import app,TOKEN
-  from zsendo import adapters
+  from pathadinai.app import app,TOKEN
+  from pathadinai import adapters
   original=adapters.call
   async def mock(provider,*args,**kwargs):return await original('demo',*args,**kwargs)
   with tempfile.TemporaryDirectory() as tmp,TestClient(app) as c,patch.dict(os.environ,{'OPENAI_API_KEY':'test-only-placeholder'}),patch.object(adapters,'call',mock):
-   p=Path(tmp)/'good.png';Image.new('RGB',(32,32),'pink').save(p);h={'x-zsendo-token':TOKEN}
+   p=Path(tmp)/'good.png';Image.new('RGB',(32,32),'pink').save(p);h={'x-pathadinai-token':TOKEN}
    body={'entries':[{'path':str(Path(tmp)/'missing.svs'),'organ':'test'},{'path':str(p),'organ':'test'}],'fields':{'mode':'relative','size':100,'output_edge':256,'detail':False},'models':[{'provider':'openai','model':'test'}],'mask_mode':'automatic','request_cap':10}
    q=c.post('/api/queues',json=body,headers=h).json();qid=q['id']
    c.post(f'/api/queues/{qid}/control',json={'action':'start','request_cap':10},headers=h)
@@ -63,8 +63,8 @@ class QueueApiTests(unittest.TestCase):
 
  def test_pause_after_current_slide(self):
   import asyncio,threading
-  from zsendo.app import app,TOKEN
-  from zsendo import adapters
+  from pathadinai.app import app,TOKEN
+  from pathadinai import adapters
   entered=threading.Event();original=adapters.call
   async def mock(provider,*args,**kwargs):
    entered.set();await asyncio.sleep(.15);return await original('demo',*args,**kwargs)
@@ -72,7 +72,7 @@ class QueueApiTests(unittest.TestCase):
    entries=[]
    for i in range(2):
     p=Path(tmp)/f'p{i}.png';Image.new('RGB',(32,32),'pink').save(p);entries.append({'path':str(p),'organ':'test'})
-   h={'x-zsendo-token':TOKEN};body={'entries':entries,'fields':{'mode':'relative','size':100,'output_edge':256,'detail':False},'models':[{'provider':'openai','model':'fixture'}],'mask_mode':'automatic'}
+   h={'x-pathadinai-token':TOKEN};body={'entries':entries,'fields':{'mode':'relative','size':100,'output_edge':256,'detail':False},'models':[{'provider':'openai','model':'fixture'}],'mask_mode':'automatic'}
    qid=c.post('/api/queues',json=body,headers=h).json()['id']
    c.post(f'/api/queues/{qid}/control',json={'action':'start'},headers=h);self.assertTrue(entered.wait(5))
    c.post(f'/api/queues/{qid}/control',json={'action':'pause'},headers=h)
@@ -86,9 +86,9 @@ class PersistenceTests(unittest.TestCase):
  def test_restarted_queue_waits_for_explicit_resume(self):
   import json
   from fastapi import FastAPI
-  from zsendo.queue import install
-  from zsendo.app import FieldSettings,ModelInput,OpenInput
-  from zsendo.engine import Engine
+  from pathadinai.queue import install
+  from pathadinai.app import FieldSettings,ModelInput,OpenInput
+  from pathadinai.engine import Engine
   with tempfile.TemporaryDirectory() as tmp:
    data=Path(tmp);(data/'queues').mkdir();qid='a'*32
    (data/'queues'/f'{qid}.json').write_text(json.dumps({'id':qid,'status':'running','created_at':'test','entries':[],'current':None,'request_cap':10}))

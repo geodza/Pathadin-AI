@@ -1,12 +1,12 @@
 import unittest,tempfile,io,asyncio
 from pathlib import Path
 from PIL import Image,ImageDraw
-from zsendo.slide import Slide
-from zsendo.fields import plan,field_images,prepare_fields,fragment_bounds,locator
-from zsendo.tissue_mask import TissueMask
-from zsendo.bundle import verify_images
-from zsendo.engine import Engine
-from zsendo.protocol import digest
+from pathadinai.slide import Slide
+from pathadinai.fields import plan,field_images,prepare_fields,fragment_bounds,locator
+from pathadinai.tissue_mask import TissueMask
+from pathadinai.bundle import verify_images
+from pathadinai.engine import Engine
+from pathadinai.protocol import digest
 
 class FieldTests(unittest.TestCase):
  def test_physical_geometry_anisotropic(self):

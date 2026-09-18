@@ -1,9 +1,9 @@
 import unittest,tempfile,json
 from pathlib import Path
-from zsendo.regions import validate_polygon,measurements
-from zsendo.workspace import context_manifest,CONDITIONS
-from zsendo.slide import Slide
-from zsendo.bundle import verify_images
+from pathadinai.regions import validate_polygon,measurements
+from pathadinai.workspace import context_manifest,CONDITIONS
+from pathadinai.slide import Slide
+from pathadinai.bundle import verify_images
 
 def rect(x,y,w,h):return [[x,y],[x+w,y],[x+w,y+h],[x,y+h]]
 class MeasurementTests(unittest.TestCase):

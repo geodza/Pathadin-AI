@@ -1,6 +1,6 @@
 import ctypes
 import unittest
-from zsendo.picker import windows_file
+from pathadinai.picker import windows_file
 
 
 class PickerTests(unittest.TestCase):

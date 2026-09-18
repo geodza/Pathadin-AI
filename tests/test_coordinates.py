@@ -1,5 +1,5 @@
 import unittest
-from zsendo.protocol import geojson
+from pathadinai.protocol import geojson
 
 class CoordinateExportTests(unittest.TestCase):
     def test_nonzero_bounds_do_not_shift_exported_geometry(self):

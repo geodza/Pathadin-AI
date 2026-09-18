@@ -9,11 +9,11 @@ from pathlib import Path
 from unittest.mock import patch
 import httpx
 from PIL import Image
-from zsendo.adapters import payload, call, demo_read
-from zsendo.bundle import prepare, verify_images
-from zsendo.engine import Engine, synthesis_calls
-from zsendo.protocol import validate_read, canonical, digest, geojson, system_prompt
-from zsendo.slide import Slide, is_tissue
+from pathadinai.adapters import payload, call, demo_read
+from pathadinai.bundle import prepare, verify_images
+from pathadinai.engine import Engine, synthesis_calls
+from pathadinai.protocol import validate_read, canonical, digest, geojson, system_prompt
+from pathadinai.slide import Slide, is_tissue
 
 def fixture(ids=('t0000000',)):
     return json.loads(demo_read(canonical({'tile_ids':list(ids)})))
@@ -32,7 +32,7 @@ class ProtocolTests(unittest.TestCase):
     def test_workers_preserve_manifest_and_scanner_bounds_only_skip_outside(self):
         with tempfile.TemporaryDirectory() as tmp:
             slide=Slide(demo=True);slide.dimensions=(1536,512);slide.scan_bounds=[512,0,512,512]
-            with patch('zsendo.bundle.is_tissue',return_value=True):
+            with patch('pathadinai.bundle.is_tissue',return_value=True):
                 with patch.object(slide,'tile',wraps=slide.tile) as reader:
                     a=prepare(slide,Path(tmp)/'a','native',8,True,lambda *a:None,lambda:False,workers=1)
                     self.assertEqual(reader.call_count,1)
@@ -210,7 +210,7 @@ class EngineTests(unittest.IsolatedAsyncioTestCase):
             if attempts:raise ValueError('attempt cap')
             attempts.append(1)
         async def no_wait(seconds):pass
-        with patch.dict(os.environ,{'OPENAI_API_KEY':'test-only'}),patch('zsendo.adapters.asyncio.sleep',no_wait):
+        with patch.dict(os.environ,{'OPENAI_API_KEY':'test-only'}),patch('pathadinai.adapters.asyncio.sleep',no_wait):
             with self.assertRaisesRegex(ValueError,'attempt cap'):
                 await call('openai','model','system','user',[],8000,lambda:False,
                            transport=httpx.MockTransport(lambda request:httpx.Response(429)),on_attempt=on_attempt)
@@ -220,7 +220,7 @@ class EngineTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as tmp:
             engine=Engine(tmp);jid=engine.new('s','organ','open',1,8,True);engine.prepare(jid,Slide(demo=True))
             async def bad(*args,**kwargs):return {'raw':'not JSON','usage':{},'attempts':1}
-            with patch('zsendo.adapters.call',bad):await engine.run(jid,[{'provider':'demo','model':'bad'}],100,8000)
+            with patch('pathadinai.adapters.call',bad):await engine.run(jid,[{'provider':'demo','model':'bad'}],100,8000)
             result=engine.get(jid)['models'][0]
             self.assertEqual(result['status'],'failed');self.assertEqual(result['calls']['batch-000000']['raw'],'not JSON')
 

@@ -1,10 +1,10 @@
 import tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
-from zsendo.slide import Slide
-from zsendo.fields import prepare_fields
-from zsendo.packing import repack
-from zsendo.bundle import verify_images
+from pathadinai.slide import Slide
+from pathadinai.fields import prepare_fields
+from pathadinai.packing import repack
+from pathadinai.bundle import verify_images
 class PackingTests(unittest.TestCase):
  def test_split_preserves_fields_pixels_and_safe_batches(self):
   with tempfile.TemporaryDirectory() as tmp:

@@ -1,8 +1,8 @@
 import unittest,tempfile
 from pathlib import Path
 from PIL import Image
-from zsendo.slide import Slide
-from zsendo.bundle import prepare
+from pathadinai.slide import Slide
+from pathadinai.bundle import prepare
 class RasterTests(unittest.TestCase):
  def test_native_png_and_jpeg(self):
   with tempfile.TemporaryDirectory() as tmp:

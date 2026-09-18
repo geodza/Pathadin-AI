@@ -4,9 +4,9 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 from PIL import Image, ImageDraw
-from zsendo.tissue_mask import TissueMask, MaskStore, detect, encode
-from zsendo.bundle import prepare
-from zsendo.slide import Slide
+from pathadinai.tissue_mask import TissueMask, MaskStore, detect, encode
+from pathadinai.bundle import prepare
+from pathadinai.slide import Slide
 
 SID='a'*32
 

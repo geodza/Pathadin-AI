@@ -1,6 +1,6 @@
 import unittest
-from zsendo.adapters import response_schema
-from zsendo.protocol import canonical
+from pathadinai.adapters import response_schema
+from pathadinai.protocol import canonical
 class CitationSchemaTests(unittest.TestCase):
  def test_batch_enum_is_shared_by_all_citations(self):
   s=response_schema(canonical({'stage':'batch','tile_ids':['t2','t1']}))

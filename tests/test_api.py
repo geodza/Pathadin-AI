@@ -5,16 +5,16 @@ import unittest
 
 # Set before app import: these API tests never write to the user's saved runs.
 _temp = tempfile.TemporaryDirectory()
-os.environ['ZSENDO_DATA'] = _temp.name
+os.environ['PATHADINAI_DATA'] = _temp.name
 from fastapi.testclient import TestClient
-from zsendo.app import app, TOKEN
+from pathadinai.app import app, TOKEN
 
 class ApiTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.client=TestClient(app)
         cls.client.__enter__()
-        cls.headers={'x-zsendo-token':TOKEN}
+        cls.headers={'x-pathadinai-token':TOKEN}
 
     @classmethod
     def tearDownClass(cls):
@@ -51,7 +51,7 @@ class ApiTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'case.svs';path.write_bytes(b'fixture')
             slide=Mock();slide.path=str(path);slide.info.return_value={'dimensions':[100,100]}
-            with patch('zsendo.app.Slide',return_value=slide):
+            with patch('pathadinai.app.Slide',return_value=slide):
                 first=self.client.post('/api/slides',json={'path':str(path)},headers=self.headers).json()
                 again=self.client.post('/api/slides',json={'path':str(path)},headers=self.headers).json()
                 self.assertEqual(first['id'],again['id'])

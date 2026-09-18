@@ -3,11 +3,11 @@ from pathlib import Path
 from PIL import Image,ImageDraw
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from zsendo.fields import plan,central_batch
-from zsendo.slide import Slide
-from zsendo.tissue_mask import TissueMask
-from zsendo.engine import Engine
-from zsendo.cache import install
+from pathadinai.fields import plan,central_batch
+from pathadinai.slide import Slide
+from pathadinai.tissue_mask import TissueMask
+from pathadinai.engine import Engine
+from pathadinai.cache import install
 
 class GeometryTests(unittest.TestCase):
  def test_nominal_scale_and_overlap(self):

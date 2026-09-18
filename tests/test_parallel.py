@@ -2,9 +2,9 @@ import asyncio
 import tempfile
 import unittest
 from unittest.mock import patch
-from zsendo.engine import Engine
-from zsendo.slide import Slide
-from zsendo import adapters
+from pathadinai.engine import Engine
+from pathadinai.slide import Slide
+from pathadinai import adapters
 
 class ParallelTests(unittest.IsolatedAsyncioTestCase):
     async def test_parallel_limit_order_and_resume(self):
