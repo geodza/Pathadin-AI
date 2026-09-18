@@ -1,0 +1,170 @@
+{
+  "type": "FeatureCollection",
+  "coordinate_system": {
+    "name": "slide_level_zero_pixels",
+    "origin": "top-left",
+    "x_axis": "right",
+    "y_axis": "down",
+    "units": "pixels",
+    "dimensions": [
+      4096,
+      3072
+    ],
+    "mpp": [
+      0.5,
+      0.5
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "batch-000000:0:t0000000",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1024,
+              0
+            ],
+            [
+              1024,
+              1024
+            ],
+            [
+              0,
+              1024
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "objectType": "annotation",
+        "name": "uncertain \u00b7 t0000000",
+        "classification": {
+          "name": "uncertain",
+          "color": [
+            123,
+            117,
+            221
+          ]
+        },
+        "tile_id": "t0000000",
+        "role": "uncertain",
+        "morphology": "Synthetic colored shapes. This fixture demonstrates coordinate linking only.",
+        "model": "demo:synthetic-fixture-v1",
+        "source": "batch-000000",
+        "geometry_kind": "tile_evidence_not_segmentation",
+        "bundle_fingerprint": "c9b0b398cae673ef894699e2a215611ee44e67396d6fd3126c674cfb24693fa9"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "batch-000001:0:t0000008",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              2048
+            ],
+            [
+              1024,
+              2048
+            ],
+            [
+              1024,
+              3072
+            ],
+            [
+              0,
+              3072
+            ],
+            [
+              0,
+              2048
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "objectType": "annotation",
+        "name": "uncertain \u00b7 t0000008",
+        "classification": {
+          "name": "uncertain",
+          "color": [
+            123,
+            117,
+            221
+          ]
+        },
+        "tile_id": "t0000008",
+        "role": "uncertain",
+        "morphology": "Synthetic colored shapes. This fixture demonstrates coordinate linking only.",
+        "model": "demo:synthetic-fixture-v1",
+        "source": "batch-000001",
+        "geometry_kind": "tile_evidence_not_segmentation",
+        "bundle_fingerprint": "c9b0b398cae673ef894699e2a215611ee44e67396d6fd3126c674cfb24693fa9"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "final:0:t0000000",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1024,
+              0
+            ],
+            [
+              1024,
+              1024
+            ],
+            [
+              0,
+              1024
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "objectType": "annotation",
+        "name": "uncertain \u00b7 t0000000",
+        "classification": {
+          "name": "uncertain",
+          "color": [
+            123,
+            117,
+            221
+          ]
+        },
+        "tile_id": "t0000000",
+        "role": "uncertain",
+        "morphology": "Synthetic colored shapes. This fixture demonstrates coordinate linking only.",
+        "model": "demo:synthetic-fixture-v1",
+        "source": "final",
+        "geometry_kind": "tile_evidence_not_segmentation",
+        "bundle_fingerprint": "c9b0b398cae673ef894699e2a215611ee44e67396d6fd3126c674cfb24693fa9"
+      }
+    }
+  ]
+}
