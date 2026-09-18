@@ -1,0 +1,140 @@
+PATHADIN AI — START HERE
+Windows beginner guide • Version 3.4 • 13 September 2026
+
+What is this?
+Pathadin AI opens a digital microscope slide or a normal picture. It divides tissue into smaller image fields, sends them to the AI model you choose, and displays a provisional report with explanations and marked evidence. A field is one tissue image. A batch is a group of fields sent in one request.
+This is a research prototype. A qualified pathologist must review the findings. Model agreement does not prove that a diagnosis is correct. It does not automatically provide validated mitosis counts or IHC scores.
+
+1. What you need
+• A Windows computer and a web browser such as Edge or Chrome.
+• Python 3.11 or newer. Python is a program that runs this app; you do not need to write code.
+• Internet access for the first installation and for real AI analysis.
+• Your own OpenAI API key and an account able to pay for API requests, if using OpenAI. No shared key is included.
+• Enough free disk space for your slide and the prepared images. Large slides can create a large cache.
+The viewer opens in your browser, but the program runs on your computer. Opening and preparing images is local; running a real model sends slide-derived images and the organ to the chosen provider. Use only images you are permitted to send.
+
+2. Unpack the download — do this first
+1) Find Pathadin-AI-Share.zip, usually in your Downloads folder.
+2) Right-click it and choose Extract All.
+3) Choose a folder in Documents, then click Extract.
+4) Open the extracted Pathadin-AI folder. You should see START PATHADIN, SET API KEY and START HERE.
+Do not start the program from inside the ZIP. Keep all the extracted files together. Windows may hide endings such as .bat and .html; this is normal.
+
+3. Install Python — only if it is not already installed
+1) Visit https://www.python.org/downloads/windows/ in your browser.
+2) Install a 64-bit Python release, version 3.11 or newer, using the instructions on that website.
+3) If the installer offers “Add Python to PATH”, tick it.
+4) Finish installation. If this is a work computer and installation is blocked, ask your IT team to install Python and allow this application. Do not disable computer security.
+
+4. Start Pathadin
+1) Double-click START PATHADIN.bat in the extracted folder.
+2) A text window opens. On first use it downloads and installs the required components. This can take several minutes. Leave the window open.
+3) A browser window should open showing Pathadin AI.
+4) If it does not, enter http://127.0.0.1:8765 in the browser address bar, after installation finishes.
+Keep the text window open while using Pathadin. Closing it stops the app. The next start usually takes less time because setup is already installed.
+
+5. Try the free synthetic demonstration
+1) Click Try a synthetic demo. This is an artificial illustration, not a patient slide.
+2) Leave the example organ in place.
+3) Look for the green tissue mask and click Save reviewed mask.
+4) Click Preview proposed batch. Wait for the images to appear.
+5) Click Prepare previewed fields. Wait for Whole slide prepared.
+6) The demo uses a simulated model. Click Analyze with selected models.
+7) Read the example output under Model reads.
+This demonstrates the controls without paid AI calls. Demo findings do not measure model quality.
+
+6. Add your OpenAI API key
+An API key is a secret credential that lets this app use your OpenAI account. Never include it in emails, screenshots or a ZIP you share.
+1) Open https://platform.openai.com/api-keys and sign in to your own account.
+2) Create a secret API key and copy it. Check your API account's billing and spending settings before starting a large run.
+3) In the Pathadin folder, double-click SET API KEY.bat. It opens a settings file in Notepad and creates it if needed.
+4) Find the line OPENAI_API_KEY= and paste your key immediately after the equals sign, all on one line. Do not paste the key into this guide or a chat.
+5) In Notepad choose File → Save, then close Notepad. The file is called .env; the helper avoids accidentally saving it as .env.txt.
+6) Close the Pathadin text window and restart START PATHADIN.bat.
+7) In an OpenAI model card, look for API key configured. This means the app found a key, not that the account or model has been verified.
+Official setup reference: https://developers.openai.com/api/docs/quickstart
+
+7. Open your slide or picture
+1) Type the organ, for example testis, in Organ. Do not leave it blank.
+2) Click the … button beside Slide or image and select the file.
+3) If the picker does not work: find the file in File Explorer, hold Shift while right-clicking it, choose Copy as path, and paste that path into Slide or image. Remove surrounding quotation marks if present.
+4) Click Open image / WSI and wait for the image.
+SVS, MRXS and other OpenSlide-supported slides are accepted, as well as JPEG and PNG pictures. Support depends on the actual file encoding, not just its name.
+For MRXS, keep the .mrxs file and its accompanying data folder together exactly as supplied. Do not move or rename only one of them.
+Inside the slide: use the mouse wheel to zoom, and hold the left mouse button while dragging to move. Outside the slide: the wheel scrolls the page.
+
+8. Check the green tissue mask
+The green overlay tells Pathadin which tissue to include. It is an automatic first draft that you must check.
+1) Tick Show green mask if needed.
+2) Inspect all tissue fragments, including pale or small pieces.
+3) Click + Paint tissue to add missing areas, or − Erase to remove glass or unwanted areas. Adjust Brush for a larger or smaller brush.
+4) Click Pan / zoom to navigate again.
+5) Click Save reviewed mask before previewing or preparing.
+Prepare only reviewed tissue mask keeps preparation focused on the selected tissue. A missed fragment may be excluded from analysis. Mask changes require a fresh preview and preparation; they do not change an existing saved run.
+
+9. Choose the tissue size and detail
+Use the preview to judge the actual images. No single setting guarantees a correct diagnosis.
+• Field size mode → Physical size: choose the width and height of each field in microns. Options include 500, 1000, 1500 and 2000 µm. Larger values show more tissue and usually require fewer fields.
+• Architectural image sent to model: choose 256, 512, 768, 1024, 2048 or native pixels. In physical-size mode, a smaller output preserves the tissue area but loses fine detail. 1024 is the default.
+• Include native 512 px center detail adds a close-up of each field's center. It does not inspect every part at native detail.
+• Fields / request controls how many fields travel together. More fields may reduce requests but makes each request larger. Oversized groups may be split automatically.
+• Field overlap repeats some tissue at neighboring edges. It adds requests. None is the default.
+If your JPEG or PNG has no measured scale, use Percentage of each tissue fragment. The percentage applies to width AND height, not area. Do not invent a micron calibration.
+Nominal magnification uses the scanner's objective metadata. If metadata is missing, use another mode. In this mode, reducing output pixels also reduces the tissue area per field.
+The suggested “Use current viewer field as analysis scale” button is not included in this release. Use the existing field controls and preview.
+
+10. Preview, then prepare
+1) Click Preview proposed batch. The initial preview is chosen near the center of the main tissue fragment.
+2) Inspect the overview, locator, architecture images and optional center details. Click a preview image to inspect it at its encoded size.
+3) Use Previous batch and Next batch to inspect more locations. One good preview does not prove every field is suitable.
+4) If needed, change the settings and preview again.
+5) Click Prepare previewed fields. This saves the model-input images on your computer.
+6) Wait until Whole slide prepared appears. Progress is above the viewer; active work also appears in a bar near the top.
+Do not click repeatedly while it is working. Changing field size, output resolution, overlap or mask requires preparation again. Changing the model or attempt cap does not require new preparation.
+
+11. Select a model and start analysis
+1) In Compare models, select OpenAI as provider. The synthetic model cannot analyze real slides.
+2) Click Refresh OpenAI model list.
+3) Use Choose account model to select an entry, or type its exact ID into Exact model ID. Choose a model whose provider documentation says it accepts images. The account list itself does not certify image support.
+4) Tick only the model cards you want. Each selected model adds its own requests and cost. One model is sufficient to analyze; two are needed for comparison.
+5) Check Planned calls / model. Set Attempt cap / model to at least that number, with room for retries. This is a request limit, not a money limit.
+6) Leave Reuse completed batches checked. Optionally enable Parallel requests; this may finish sooner but does not reduce total requests and can encounter account rate limits.
+7) Click Analyze with selected models.
+Leave the computer awake, connected to the internet, and the app running. Hundreds of requests can take a long time. Avoid starting another copy of the app while one is running.
+
+12. Read and save results
+Scroll to Model reads. Each model has its own result card with provisional diagnosis, explanation, limitations and evidence. Inspect any protocol warnings.
+“Need at least two models” concerns comparison only; it is not an error for a single-model run.
+“Synthesizing” means image batches have finished and the model is combining their reports. The run is not complete yet. Watch report progress rather than just image-batch progress.
+Use Inspect saved stage evidence to examine saved batch and synthesis reports. These may be partial and are not a completed slide-level assessment.
+Use the model-annotation selector to show evidence on the slide. Tile rectangles identify supporting image fields; they are not precise tumour boundaries.
+Export complete run JSON saves the report and detailed run data. JSON is a structured data file; read the report in Pathadin if the exported text is difficult to understand. Export prepared tiles ZIP saves the actual prepared images. Store exports in a folder you can find again.
+
+13. Regions and context comparison — optional
+Click Regions & measurements to expand it. Draw polygons or use a visible rectangle, choose the region type, and save. Physical area requires valid slide calibration; otherwise area is shown in square pixels. The tumour percentage requires a tissue boundary as denominator. These are measurements of your drawings, not automatically validated tumour segmentation.
+Click Context comparison to expand it. Select a saved region, choose the views to compare, prepare the comparison preview, then run it. This asks the model about the same location with different context. It uses additional requests. The pathologist reference field is saved separately and is not sent to models.
+
+14. Resume, back up, update and share
+Resume: start the app, choose your previous run in Saved runs, keep Reuse completed batches checked and click Resume / analyze. Previously completed requests are reused when their inputs still match. A failed request may need to run again.
+Back up: close the app and copy its data folder to a safe location. Keep the original slide and any MRXS companion folder too. Saved runs may refer to the original slide path. Keep .env private; it contains your credentials.
+Update: close the app, extract the new release into a different folder, copy data and .env beside its run.bat, then launch it. Press Ctrl+F5 in the browser to refresh the interface. Keep the old folder until the new one works.
+Share: send the original clean Pathadin-AI-Share.zip. Do not zip up your working folder: it may contain your key, slide images, notes and results. Each recipient supplies their own key.
+
+15. Free disk space
+Open Cached data, then Review removable caches. Check the run name, size and file count before choosing Clear and confirming.
+This removes prepared images from an inactive analysis run. Reports, masks and regions remain. You cannot resume that cleared run or export its tiles; a new preparation is needed. Active runs and context-comparison caches are protected. Original slides are not deleted.
+
+16. If something does not work
+“Python not found”: install Python, then close and reopen the launcher. Ask IT if installation is restricted.
+Text window closes or setup fails: reopen START PATHADIN and read the error. Check internet access. Share the error text with support, never your API key.
+Browser cannot connect: keep the text window open and check it has finished starting. Open http://127.0.0.1:8765. If that port is already in use, find and close the other Pathadin instance after its work has stopped.
+“API key missing”: use SET API KEY, save, and restart the app. A configured key can still be invalid or lack account access.
+Account, quota or rate-limit error: check API billing, model access and limits in your provider account. Reduce parallel requests if appropriate.
+“Request budget is smaller…”: increase Attempt cap to cover the displayed planned calls. No new preparation is needed for that change.
+Analyze button grey: wait if a run is active. Otherwise choose a saved prepared run, or finish Preview and Prepare for a new slide.
+“No green mask”: check Show green mask, wait for detection, and read the mask status. Reopen the slide if necessary.
+“Analysis failed” or “Partial”: read the error, export the run for troubleshooting, and retain the data folder. Do not clear the cache. After fixing the cause, resume with reuse enabled.
+No final diagnosis yet: check whether synthesis is still running. A partial run may have saved batch evidence but no final report.
+Controls look old after an update: close the old app, start the new folder's launcher and press Ctrl+F5.
+
+Before asking for help, note the version, the error message, the image format and the model ID. A screenshot without identifying information can help. Do not send .env or your API key.

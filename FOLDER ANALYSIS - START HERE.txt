@@ -1,0 +1,27 @@
+PATHADIN AI 4.0 — FOLDER ANALYSIS
+
+Update first
+Close the old app. Extract this release into a new folder. Copy your old data folder and .env beside the new run.bat. Start the new launcher and press Ctrl+F5 in the browser. Keep the old folder as a backup.
+
+1. Expand Folder analysis near the top of the page.
+2. Click Choose a file in folder and select any slide in the folder you want. Alternatively paste the folder path. Tick Include subfolders if needed, then Scan folder.
+3. Use Select all / Select none or individual checkboxes. Enter an organ and click Apply organ to selected. Each row can have a different organ. Filenames are not used to guess organs. MRXS companion folders are excluded from the scan.
+4. Below the folder panel, set the usual field dimensions, output resolution, native-detail option, overlap and models. These choices will be copied into your queue. Use physical dimensions only for calibrated slides; for uncalibrated ordinary images use percentage mode. Missing calibration is flagged, not guessed. Field settings are shared within one queue; use separate queues for different protocols.
+5. Choose mask handling: Review masks before analysis, or Unattended automatic masks. Existing reviewed masks are reused when the source matches. Automatic masks remain explicitly marked unreviewed.
+6. Set Total request cap. This is a cumulative cap for the queue across selected models, including retries. It is not a money limit. Increase it later to resume after reaching it.
+7. Click Create queue from selection. The source list and settings are now frozen. A matching existing queue is reopened to avoid duplicate requests.
+8. Click Generate masks / check slides. This opens each selected slide, generates or loads masks and estimates requests. No model calls occur. The gallery shows tissue thumbnails with green mask overlays. Failed slides remain visible.
+9. In review mode, click Open / review mask for each slide that needs review, correct it in the main viewer and Save reviewed mask. The normal preview controls can inspect fields before starting. Repeat as needed, then return to Folder analysis. Check slides again to refresh thumbnails and estimates.
+10. Click Start / resume queue. In unattended mode, this can also perform preflight automatically. Pathadin prepares and analyzes slides one at a time, with the configured parallel requests inside each slide. Keep the app and computer running.
+11. Pause after current slide finishes the current slide before stopping. Cancel current slide asks the current work to stop and marks the slide skipped; an in-flight request may still finish. The rest of the queue continues. Retry failed slides rechecks failed slides and resumes matching completed requests. Skipped slides are not automatically retried.
+12. Open run shows a slide's detailed results. Export results CSV creates one row per slide/model, including failures, diagnosis, explanation, limitations, processing seconds, request attempts and provider-reported usage. CSV links refer to this local app; save individual JSON/GeoJSON reports for portable results.
+
+After restarting
+Choose the queue from Saved queues. An interrupted queue remains paused until you explicitly resume. Do not prepare the slides individually again. Keep the source files and paths unchanged. If a source changes after preparation, create a new queue for that source.
+
+Limits and interpretation
+This is sequential slide processing, not multiple slides analyzed at once. Folder scanning is limited to 5000 supported filenames and actual file support is checked during preflight. A bad slide is recorded and the queue continues. Account, quota and request-cap errors pause the queue. Planned calls can increase when oversized image batches are split. Only a minimum 512 MB disk reserve is checked, so ensure sufficient space for large cached slides. There is no automatic disk-size forecast or currency estimate.
+Processing seconds count time spent in queue work, including preflight and resumed work; provider token usage is exported as reported. Tile evidence rectangles are not exact tumour segmentation. Automatic-mask results may omit missed tissue. All diagnoses need pathologist review.
+
+Your key and data
+Use your own provider API key. Slide-derived images and organ are sent to selected providers when you start analysis. Queue records, masks, reports and images are saved under data. Do not clear caches needed for pending queues. Share the original clean ZIP, never the working folder containing .env and patient data.
