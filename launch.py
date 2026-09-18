@@ -10,4 +10,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not args.no_browser:
         threading.Timer(1.5,lambda:webbrowser.open(f'http://127.0.0.1:{args.port}')).start()
-    uvicorn.run('zsendo.app:app',host='127.0.0.1',port=args.port,log_level='info')
+    uvicorn.run('pathadinai.app:app',host='127.0.0.1',port=args.port,log_level='info')
